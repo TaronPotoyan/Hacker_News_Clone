@@ -1,0 +1,7 @@
+# node_modules
+/backend/node_modules
+/frontend/hacker-news-clone-frontend/node_modules
+
+# .env
+/backend/.development.env
+/backend/.production.env
