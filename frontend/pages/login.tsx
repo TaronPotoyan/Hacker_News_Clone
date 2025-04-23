@@ -1,26 +1,64 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-    return (
-        <>
-            <div className="Log-in">
-                <h2>Log in</h2>
-                <div className="container">
-                    <big>username: </big>  
-                    <input type="text" className="inp" />
-                </div>
-                <div className="container">
-                    <big>Password: </big>
-                    <input type="password" className="inp" />
-                </div>
-                
-                <div>
-                    <Link to="/forgot" className="forgot-link">Forgot Password?</Link>
-                </div>
+    const [name, setName] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
-                <button className="logbtn">Log in</button>
+    function handleLogin() {
+        fetch('http://localhost:3000/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name : name, password : password})
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.message || data.user.name === undefined) {
+                
+                alert('Log in fall')
+            }else {
+                alert('Login success');
+                navigate('/');
+                localStorage.setItem('user', data.user.name);
+            }              
+
+        })
+        .catch(err => {
+            alert('Error loging')
+            console.error(err);
+        });
+    }
+    
+
+    return (
+        <div className="Log-in">
+            <h2>Log in</h2>
+            <div className="container">
+                <big>Username: </big>  
+                <input 
+                    type="text" 
+                    className="inp" 
+                    value={name} 
+                    onChange={e => setName(e.target.value)} 
+                />
             </div>
-        </>
+            <div className="container">
+                <big>Password: </big>
+                <input 
+                    type="password" 
+                    className="inp" 
+                    value={password} 
+                    onChange={e => setPassword(e.target.value)} 
+                />
+            </div>
+            <div>
+                <Link to="/CreatUser" className="forgot-link">Creat new account?</Link>
+            </div>
+            <button className="logbtn" onClick={handleLogin}>Log in</button>
+        </div>
     );
 }
