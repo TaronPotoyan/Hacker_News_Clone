@@ -11,4 +11,5 @@ router.get('/:id' , service.getById); //stanum enq commentnery tvyal Story-ii ha
 router.post('/',IsPostValid, service.post);
 router.put('/comm/:id/put',service.put_comm);
 
+
 export default router;

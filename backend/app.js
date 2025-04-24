@@ -19,7 +19,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/stories', router);
 app.use('/login',routLogin);
-app.use('/apply_comm/:id',rout_replay);
+app.use('/get_replays/',rout_replay);
 
 
 app.listen(PORT,()=> {
