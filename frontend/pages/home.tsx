@@ -27,6 +27,7 @@ function Main() {
   const [stories, setStories] = useState<StoryProps[]>([]);
 
   useEffect(() => {
+    
     fetch("http://localhost:3000/stories/")
       .then((response) => response.json())
       .then((data) => {

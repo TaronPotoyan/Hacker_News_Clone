@@ -27,12 +27,12 @@ async function CreatUser(req, res) {
       
       return res.status(201).json({
         success: true,
-        user: { name: newUser.name } // Never return password
+        user: { name: newUser.name } 
       });
       
     } catch (err) {
       console.error("Save error:", err);
-      if (err.code === 11000) { // MongoDB duplicate key error
+      if (err.code === 11000) {
         return res.status(400).json({ error: "Username already exists" });
       }
       return res.status(500).json({ error: "Server error" });

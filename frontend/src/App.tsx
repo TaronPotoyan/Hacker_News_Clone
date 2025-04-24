@@ -13,7 +13,6 @@ function App() {
     <Router>
       <Routes>
         <Route path='/' element={<Home/>}/>
-        <Route path="/:user" element={<Home/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path="/CreatUser" element={<Create_User />} />
         <Route path='/story/comm/:id' element={<Comments/>} />

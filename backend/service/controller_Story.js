@@ -11,23 +11,28 @@ export async function get(req, res) {
   }
 }
 
-export async function getById(req, res) {
+export async function getById(req, res) {  
+  
   try {
     const { id } = req.params;
-
+    console.log(`STID ${id}`);
+    
     if (!id || id === 'undefined') {
       return res.status(400).json({
         error: 'Missing or invalid story ID',
         details: 'ID must be a valid MongoDB ObjectId'
       });
     }
-
+    console.log('there');
+    
     const story = await Story.findById(id).lean();
     if (!story) {
       return res.status(404).json({ error: 'Story not found' });
     }
 
+    
     res.json(story);
+
   } catch (error) {
     console.error('Get by ID error:', error);
 
@@ -41,6 +46,7 @@ export async function getById(req, res) {
     res.status(500).json({ error: 'Error fetching story' });
   }
 }
+
 
 export async function post(req, res) {
 
@@ -75,56 +81,32 @@ export async function post(req, res) {
   }
 }
 
-export async function put_comm(req, res) {
-  console.log('Put is working');
 
+
+export const put_comm = async (req, res) => {
+  const { id } = req.params;
+  const { author, title, text } = req.body;
+  
   try {
-    const { id } = req.params;
-    const { author, text } = req.body;
-
-    if (!id || id === 'undefined') {
-      return res.status(400).json({
-        error: 'Missing or invalid story ID',
-        details: 'ID must be a valid MongoDB ObjectId'
-      });
-    }
-
-    if (!author || !text) {
-      return res.status(400).json({
-        error: 'Validation error',
-        details: 'Author and text are required for comments'
-      });
-    }
-
     const story = await Story.findById(id);
     if (!story) {
-      return res.status(404).json({ error: 'Story not found' });
+      return res.status(404).json({ message: "Story not found" });
     }
 
-    story.comments.push({ author, text });
+
+    story.comments.push({ author, title, text });
     await story.save();
 
-    res.status(201).json(story);
+    res.status(200).json(story);
   } catch (error) {
-    console.error('Put comment error:', error);
-
-    if (error.name === 'CastError') {
-      return res.status(400).json({
-        error: 'Invalid story ID format',
-        details: 'ID must be a valid MongoDB ObjectId'
-      });
-    }
-
-    res.status(500).json({
-      error: 'Error adding comment',
-      details: error.message
-    });
+    res.status(500).json({ message: "Error adding comment", error });
   }
-}
+};
+
 
 export default {
   get,
   getById,
   post,
   put_comm,
-};
+}

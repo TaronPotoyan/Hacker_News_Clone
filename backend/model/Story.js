@@ -10,12 +10,15 @@ const storySchema = new mongoose.Schema({
       {
         author: { type: String, required: true },
         text: { type: String, required: true },
-        date: { type: Date, default: Date.now }
+        date: { type: Date, default: Date.now },
+        replies: { 
+          type: [this],
+          default: [] 
+        }
       }
     ],
     default: []
   }
 });
-
 const Story = mongoose.model('Story', storySchema, 'story');
 export default Story;
