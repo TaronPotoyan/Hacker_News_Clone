@@ -5,7 +5,7 @@ import Login from '../pages/login'
 import User_Page from '../pages/user_page'
 import './index.css'
 import Create_User from '../pages/CreatUser';
-
+import Newest from '../pages/new'
 
 
 function App() {
@@ -17,6 +17,7 @@ function App() {
         <Route path="/CreatUser" element={<Create_User />} />
         <Route path='/story/comm/:id' element={<Comments/>} />
         <Route path='/userpage/' element={<User_Page/>} />
+        <Route path='/newest' element={<Newest/>} />
       </Routes>
     </Router>
   );

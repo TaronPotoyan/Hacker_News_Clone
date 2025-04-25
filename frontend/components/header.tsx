@@ -16,13 +16,12 @@ function Header() {
       </Link>
       <nav>
         <ul style={{ listStyle: "none" }} className="nav">
-          <li><Link to="/new">new</Link></li>
+          <li><Link to="/newest">new</Link></li>
           <li><Link to="/post">post</Link></li>
           <li><Link to="/comments">comments</Link></li>
           <li><Link to="/ask">ask</Link></li>
           <li><Link to="/show">show</Link></li>
           <li><Link to="/jobs">jobs</Link></li>
-          <li><Link to="/submit">submit</Link></li>
         </ul>
       </nav>
       {loggedInUser ? (

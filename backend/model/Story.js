@@ -70,7 +70,12 @@ const storySchema = new mongoose.Schema({
   comments: { 
     type: [commentSchema], 
     default: [] 
-  }
+  },
+  score: {
+    type: Number,
+    default: 0,
+    min: 0
+  },
 }, { timestamps: true });
 
 storySchema.index({ title: 'text', 'comments.text': 'text', 'comments.replies.text': 'text' });

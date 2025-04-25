@@ -4,7 +4,7 @@ export async function get(req, res) {
   console.log('Works');
   
   try {
-    const stories = await Story.find().sort({ date: -1 }).lean();
+    const stories = await Story.find({ score: { $gt: 5 } }).sort({ date: -1 }).lean();
     console.log(stories);
     
     res.json(stories);
@@ -61,7 +61,8 @@ export async function post(req, res) {
       title,
       url,
       comments,
-      date: new Date()
+      date: new Date(),
+      score : 0
     });
 
     await newStory.save();
@@ -75,7 +76,7 @@ export async function post(req, res) {
   }
 }
 
-export const put_comm = async (req, res) => {
+const put_comm = async (req, res) => {
   const { id } = req.params;
   const { author, text } = req.body;
 
@@ -96,7 +97,37 @@ export const put_comm = async (req, res) => {
   }
 };
 
+async function SetScore(req, res) {
+  const { score , _id , add } = req.body; 
+  console.log('Working for like ', _id);
+  
+  try {
+      const story = await Story.findOne({_id});
+      
+      if (!story) {
+          return res.status(404).json({ message: 'Story not found' });
+      }
+      if (add) {
+        story.score += 1;
+      } else {
+        story.score -= 1;
+      }  
+      res.status(200).json({
+          message: 'Score updated successfully',
+          newScore: story.score
+      });
+      await story.save();
+      
+  } catch (error) {
+      console.error('Error updating score:', error);
+      res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
+
+
 export default {
+  SetScore,
   get,
   getById,
   post,

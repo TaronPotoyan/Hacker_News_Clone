@@ -21,8 +21,9 @@ export default function User_Page() {
     );
 }
 
+
 function Profil({ user, date }: { user: string | null; date: string | null }) {
-    
+
     const [pemail , setPemail] = useState (localStorage.getItem('email'));
     const [update, setUpdate] = useState(false);
     const [about, setAbout] = useState(localStorage.getItem('about') || '');
