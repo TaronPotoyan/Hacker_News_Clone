@@ -1,74 +1,125 @@
-.comments-wrapper {
-  font-size: 16px;
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
+.comments-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-.comm {
-  border: 1px solid #ccc;
-  padding: 15px;
-  width: 80%;
-  max-width: 600px;
+.comment, .reply {
+  background: #f9f9f9;
   border-radius: 8px;
-  background-color: #f9f9f9;
+  padding: 15px;
   margin-bottom: 15px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
-.comm h3 {
-  margin: 0 0 5px;
-  color: #333;
+.comment-header, .reply-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
 }
 
-.comm p {
-  margin: 5px 0;
-  line-height: 1.4;
+.comment-date, .reply-date {
+  color: #666;
+  font-size: 0.9em;
 }
 
-.comm input {
-  padding: 6px 10px;
-  width: calc(100% - 12px);
-  margin-top: 8px;
-  margin-right: 5px;
-  border-radius: 4px;
-  border: 1px solid #aaa;
-  font-size: 14px;
+.comment-text, .reply-text {
+  margin-bottom: 10px;
+  line-height: 1.5;
 }
 
-.comm button {
-  padding: 6px 12px;
-  margin-top: 6px;
-  margin-right: 5px;
-  background-color: #007bff;
+.reply-toggle-btn, .reply-btn {
+  background: #007bff;
   color: white;
   border: none;
+  padding: 5px 10px;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 0.9em;
 }
 
-.comm button[disabled] {
-  background-color: #aaa;
+.reply-toggle-btn:hover, .reply-btn:hover {
+  background: #0056b3;
+}
+
+.reply-toggle-btn:disabled, .reply-btn:disabled {
+  background: #cccccc;
   cursor: not-allowed;
 }
 
-.comm .replies {
-  background-color: #eef2f5;
-  border-left: 3px solid #007bff;
+.reply-input-container {
   margin-top: 10px;
+}
+
+.reply-input-container textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical;
+  min-height: 60px;
+}
+
+.reply-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.submit-reply-btn, .cancel-reply-btn {
+  padding: 5px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submit-reply-btn {
+  background: #28a745;
+  color: white;
+}
+
+.submit-reply-btn:hover {
+  background: #218838;
+}
+
+.submit-reply-btn:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+
+.cancel-reply-btn {
+  background: #dc3545;
+  color: white;
+}
+
+.cancel-reply-btn:hover {
+  background: #c82333;
+}
+
+.error-message {
+  color: #dc3545;
+  background: #f8d7da;
   padding: 10px;
   border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+}
+
+.add-reply-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  margin-top: 10px;
   font-size: 14px;
+  border-radius: 5px;
 }
 
-.comm .replies p {
-  margin: 4px 0;
-}
-
-.comm .replies strong {
-  color: #dc8605;
+.add-reply-btn:hover {
+  background-color: #45a049;
 }

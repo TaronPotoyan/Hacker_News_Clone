@@ -1,9 +1,12 @@
 import Story from "../model/Story.js";
 
-
 export async function get(req, res) {
+  console.log('Works');
+  
   try {
     const stories = await Story.find().sort({ date: -1 }).lean();
+    console.log(stories);
+    
     res.json(stories);
   } catch (error) {
     console.error('Get stories error:', error);
@@ -11,28 +14,23 @@ export async function get(req, res) {
   }
 }
 
-export async function getById(req, res) {  
-  
+export async function getById(req, res) {
   try {
     const { id } = req.params;
-    console.log(`STID ${id}`);
-    
+
     if (!id || id === 'undefined') {
       return res.status(400).json({
         error: 'Missing or invalid story ID',
         details: 'ID must be a valid MongoDB ObjectId'
       });
     }
-    console.log('there');
-    
+
     const story = await Story.findById(id).lean();
     if (!story) {
       return res.status(404).json({ error: 'Story not found' });
     }
 
-    
     res.json(story);
-
   } catch (error) {
     console.error('Get by ID error:', error);
 
@@ -47,14 +45,10 @@ export async function getById(req, res) {
   }
 }
 
-
 export async function post(req, res) {
-
-
   try {
     const { author, title, url, comments = [] } = req.body;
-    console.log(author,title,url);
-    
+
     if (!title || !url || !author) {
       return res.status(400).json({
         error: 'Validation error',
@@ -63,7 +57,7 @@ export async function post(req, res) {
     }
 
     const newStory = new Story({
-      author : author.toString(),
+      author: author.toString(),
       title,
       url,
       comments,
@@ -81,32 +75,30 @@ export async function post(req, res) {
   }
 }
 
-
-
 export const put_comm = async (req, res) => {
   const { id } = req.params;
-  const { author, title, text } = req.body;
-  
+  const { author, text } = req.body;
+
   try {
     const story = await Story.findById(id);
     if (!story) {
       return res.status(404).json({ message: "Story not found" });
     }
 
-
-    story.comments.push({ author, title, text });
+    const newComment = { author, text, date: new Date(), replies: [] };
+    story.comments.push(newComment);
     await story.save();
 
     res.status(200).json(story);
   } catch (error) {
+    console.error('Error adding comment:', error);
     res.status(500).json({ message: "Error adding comment", error });
   }
 };
-
 
 export default {
   get,
   getById,
   post,
-  put_comm,
-}
+  put_comm
+};

@@ -1,69 +1,85 @@
 import mongoose from "mongoose";
 import Story from "../model/Story.js";
 
-async function setReplay(req, res) {
-    console.log('Replay put works');
-    
+async function setReply(req, res) {
   const { id } = req.params;
-  const { replyText, index, author } = req.body;
+  const { replyText, author, index, replyPath = [] } = req.body;
 
-  console.log(id, replyText, author);
-  console.log("Replay request is on");
+  if (!replyText?.trim() || !author?.trim()) {
+    return res.status(400).json({ message: "Reply text and author are required" });
+  }
+
+  if (isNaN(index) || index < 0) {
+    return res.status(400).json({ message: "Invalid comment index" });
+  }
 
   try {
-    const user = await Story.findOne({ _id: id });
+    const story = await Story.findById(id);
+    if (!story) return res.status(404).json({ message: "Story not found" });
 
-    if (!user) {
-      return res.status(404).json({ message: "Story not found" });
-    }
-
-    if (index < 0 || index >= user.comments.length) {
+    if (index >= story.comments.length) {
       return res.status(400).json({ message: "Invalid comment index" });
     }
 
-    user.comments[index].replies.push({
+    let target = story.comments[index];
+
+    for (const pathIndex of replyPath) {
+      if (!target.replies || pathIndex >= target.replies.length) {
+        return res.status(400).json({ message: `Invalid reply path at index ${pathIndex}` });
+      }
+      target = target.replies[pathIndex];
+    }
+
+    if (!target.replies) {
+      target.replies = [];
+    }
+
+    target.replies.push({
+      author,
       text: replyText,
-      author: author, 
       date: new Date(),
+      replies: [] 
     });
 
-    await user.save();
+    await story.save();
 
     return res.status(200).json({ message: "Reply added successfully" });
-  } catch (error) {
-    console.error("Error during replay:", error);
-    return res.status(500).json({ message: "An error occurred" });
+  } catch (err) {
+    console.error("Error adding reply:", err);
+    return res.status(500).json({ message: "Server error" });
   }
 }
 
 async function getReplays(req, res) {
-    console.log('Get replay');
-    
-  const { id } = req.params; 
-  const { index } = req.body; 
+  const { id } = req.params;
+  const { index } = req.body;
+
+  if (isNaN(index) || index < 0) {
+    return res.status(400).json({ message: "Invalid comment index" });
+  }
 
   try {
-    const user = await Story.findOne({ _id: id });
-
-    if (!user) {
+    const story = await Story.findOne({ _id: id });
+    if (!story) {
       return res.status(404).json({ message: "Story not found" });
     }
 
-    if (index < 0 || index >= user.comments.length) {
+    if (index >= story.comments.length) {
       return res.status(400).json({ message: "Invalid comment index" });
     }
 
-    const comment = user.comments[index];
-    const replies = comment.replies || []; 
+    const comment = story.comments[index];
+    const replies = comment.replies || [];
 
     return res.status(200).json({ replies });
   } catch (error) {
     console.error("Error fetching replies:", error);
-    return res.status(500).json({ message: "An error occurred" });
+    return res.status(500).json({ message: "Server error" });
   }
 }
 
+
 export default {
-  setReplay,
+  setReply,
   getReplays,
 };

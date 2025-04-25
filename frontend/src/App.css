@@ -74,3 +74,42 @@ li a:hover {
 .header span {
   margin-right: 15px; 
 }
+
+.logged-in {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logged-in a {
+  font-weight: bold;
+  color: #333;
+  font-size: 18px;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.logged-in a:hover {
+  color: #ff6600;
+  text-decoration: underline;
+}
+
+.logged-in .login {
+  background-color: #ff6600;
+  padding: 8px 16px;
+  font-size: 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  border: none;
+  color: white;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.logged-in .login:hover {
+  background-color: #e65c00;
+  transform: scale(1.05);
+}
+
+.logged-in .login:active {
+  transform: scale(0.98);
+}

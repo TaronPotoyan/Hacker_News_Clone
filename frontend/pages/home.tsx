@@ -16,9 +16,9 @@ export default function Home() {
 
   return (
     <>
-      <Header loggedInUser={loggedInUser} />
+      <Header loggedInUser={loggedInUser}  />
       <Main />
-      <Footer creating_txt={"Story"} author={loggedInUser || "Unknown"} />
+      <Footer creating_txt="Story" author={loggedInUser || "Unknown"} />
     </>
   );
 }
@@ -27,15 +27,10 @@ function Main() {
   const [stories, setStories] = useState<StoryProps[]>([]);
 
   useEffect(() => {
-    
     fetch("http://localhost:3000/stories/")
       .then((response) => response.json())
-      .then((data) => {
-        setStories(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+      .then((data) => setStories(data))
+      .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
   return (
@@ -54,6 +49,8 @@ function Main() {
 interface Comment {
   author: string;
   text: string;
+  date: string;
+  replies?: Comment[];
 }
 
 interface StoryProps {
@@ -65,14 +62,7 @@ interface StoryProps {
   date: string;
 }
 
-function Story({
-  _id,
-  author,
-  title,
-  url,
-  date,
-  index,
-}: StoryProps & { index: number }) {
+function Story({ _id, author, title, url, date, index }: StoryProps & { index: number }) {
   return (
     <div className="Story">
       <h3>
@@ -81,7 +71,7 @@ function Story({
         </a>
       </h3>
       <b>{author}</b>
-      <h3>{date}</h3>
+      <h3>{new Date(date).toLocaleString()}</h3>
       <Link to={`/story/comm/${_id}`}>Comments</Link>
     </div>
   );

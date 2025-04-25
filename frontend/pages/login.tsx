@@ -18,12 +18,15 @@ export default function Login() {
         .then(res => res.json())
         .then(data => {
             if (data.message || data.user.name === undefined) {
-                
-                alert('Log in fall')
+                alert(`Log in fall : ${data.message}`)
             }else {
                 alert('Login success');
                 navigate('/');
                 localStorage.setItem('user', data.user.name);
+                localStorage.setItem('date', data.user.date);
+                localStorage.setItem('password', data.user.password);
+                localStorage.setItem('email',data.user.email);
+                localStorage.setItem('about' , data.user.about);
             }              
 
         })

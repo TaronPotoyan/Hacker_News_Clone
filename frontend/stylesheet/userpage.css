@@ -1,0 +1,85 @@
+.user {
+    max-width: 600px;
+    margin: 3rem auto;
+    padding: 2rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: all 0.3s ease-in-out;
+}
+
+.user:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+}
+
+.user span {
+    display: block;
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+    color: #333;
+}
+
+.user span:first-child {
+    font-weight: bold;
+}
+
+.user input[type="text"],
+.user textarea {
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.user input[type="text"]:focus,
+.user textarea:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.user input[type="text"]::placeholder,
+.user textarea::placeholder {
+    color: #888;
+}
+
+.user textarea {
+    resize: vertical;
+    font-family: 'Arial', sans-serif;
+    font-size: 1rem;
+}
+
+.user button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.user button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.user button:active {
+    background-color: #00408f;
+}
+
+.user label {
+    margin-top: 1rem;
+    display: block;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #555;
+}

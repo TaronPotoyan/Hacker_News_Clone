@@ -3,4 +3,6 @@
 @import '../stylesheet//login.css';
 @import '../stylesheet/main_content.css';
 @import '../stylesheet/footer.css';
-@import '../stylesheet/user_crear.css'
+@import '../stylesheet/user_crear.css';
+@import '../stylesheet//user_crear.css';
+@import '../stylesheet/userpage.css'

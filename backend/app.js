@@ -3,8 +3,8 @@ import router from './controller/route_Stroies.js'
 import mongoose from 'mongoose';
 import cors from 'cors'
 import routLogin from './controller/rout_login.js'
-import rout_replay from './controller/rout_comm.js'
-
+import rout_replay from './controller/rout_replay.js'
+import rout_user from './controller/rout_user.js'
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -20,6 +20,7 @@ app.use(express.json());
 app.use('/stories', router);
 app.use('/login',routLogin);
 app.use('/get_replays/',rout_replay);
+app.use('/users/',rout_user);
 
 
 app.listen(PORT,()=> {
