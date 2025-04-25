@@ -37,6 +37,7 @@ export default function Footer({ creating_txt }: FooterProps) {
         console.log("Story created:", data);
         setTitle("");
         setUrl("");
+        window.location.reload();
       })
       .catch((error) => {
         console.error("Error:", error);
