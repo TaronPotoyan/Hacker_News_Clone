@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface Comment {
     author: string;
@@ -20,9 +21,16 @@ interface StoryProps {
 
 export default function Story({ _id, author, title, url, date, index, score = 0 }: StoryProps & { index: number }) {
     const [liked, setLiked] = useState(localStorage.getItem(`liked_${_id}`) === "true");
-
+    const [islogged, setLogged] = useState(localStorage.getItem('user') == null ? false : true);
+    const navigate = useNavigate();
     const LikeHandler = async () => {
         if (liked) {
+            if ( !islogged ) {
+                alert('pleas log in');
+                navigate('/login');
+                return ;
+            }
+            
             fetch(`http://localhost:3000/stories/like/${_id}`, {
                 method: 'PUT',
                 headers: {
@@ -67,8 +75,8 @@ export default function Story({ _id, author, title, url, date, index, score = 0 
             <button
                 onClick={LikeHandler}
                 style={{
-                    backgroundColor: liked ? "#ff6600" : "#f0f0f0",
-                    color: liked ? "white" : "black",
+                    backgroundColor:  islogged ?  (liked ? "#ff6600" : "#f0f0f0") : "white" ,
+                    color: "black",
                     border: liked ? "1px solid #4caf50" : "1px solid gray",
                     padding: "6px 12px",
                     borderRadius: "5px",
