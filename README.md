@@ -30,5 +30,5 @@ This is a Hacker News clone built using **React** for the frontend and **Express
 ### Clone the repository
 
 ```bash
-git clone https://github.com/your-username/hacker-news-clone.git
+git clone https://github.com/TaronPotoyan/Hacker_News_Clone/
 cd hHacker-News-Clone
