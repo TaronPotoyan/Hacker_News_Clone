@@ -2,6 +2,15 @@ import { useEffect, useState } from "react";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import Story from '../components/Story.tsx'
+import React from "react";
+
+interface StoryProps {
+  _id: string;
+  title: string;
+  author: string;
+  content: string;
+ 
+}
 
 
 export default function Home() {
@@ -18,7 +27,7 @@ export default function Home() {
 
   return (
     <>
-      <Header loggedInUser={loggedInUser}  />
+      <Header />
       <Main />
       <Footer creating_txt="Story" author={loggedInUser || "Unknown"} />
     </>

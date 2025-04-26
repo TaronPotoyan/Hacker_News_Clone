@@ -4,7 +4,7 @@ export async function get(req, res) {
   console.log('Works');
   
   try {
-    const stories = await Story.find({ score: { $gt: 5 } }).sort({ date: -1 }).lean();
+    const stories = await Story.find().sort({ date: -1 }).lean();
     console.log(stories);
     
     res.json(stories);
@@ -107,6 +107,8 @@ async function SetScore(req, res) {
       if (!story) {
           return res.status(404).json({ message: 'Story not found' });
       }
+      console.log(add);
+      
       if (add) {
         story.score += 1;
       } else {
@@ -117,6 +119,7 @@ async function SetScore(req, res) {
           newScore: story.score
       });
       await story.save();
+      
       
   } catch (error) {
       console.error('Error updating score:', error);

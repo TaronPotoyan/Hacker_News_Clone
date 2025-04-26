@@ -51,6 +51,7 @@ async function setReply(req, res) {
 }
 
 async function getReplays(req, res) {
+  
   const { id } = req.params;
   const { index } = req.body;
 

@@ -1,65 +1,38 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-
-interface Comment {
-    author: string;
-    text: string;
-    date: string;
-    replies?: Comment[];
-}
-
-interface StoryProps {
-    _id: string;
-    author: string;
-    title: string;
-    url: string;
-    comments: Comment[];
-    date: string;
-    score: number;
-}
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Story({ _id, author, title, url, date, index, score = 0 }: StoryProps & { index: number }) {
-    const [liked, setLiked] = useState(localStorage.getItem(`liked_${_id}`) === "true");
-    const [islogged, setLogged] = useState(localStorage.getItem('user') == null ? false : true);
+    const user = localStorage.getItem('user');
+    const [liked, setLiked] = useState(
+        localStorage.getItem(`liked_${_id}_${user}`) === "true"
+    );
+    const [islogged, setLogged] = useState(user != null);
+    const [innerscore, setinnerscore] = useState(score);
+
     const navigate = useNavigate();
+
     const LikeHandler = async () => {
-        if (liked) {
-            if ( !islogged ) {
-                alert('pleas log in');
-                navigate('/login');
-                return ;
-            }
-            
-            fetch(`http://localhost:3000/stories/like/${_id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ _id, add: false })
-            })
-            .then(res => res.json())
-            .then(response => {
-                console.log(response.message);
-                localStorage.setItem(`liked_${_id}`, 'false');
-                setLiked(false);
-                window.location.reload();
-            });
-        } else {
-            fetch(`http://localhost:3000/stories/like/${_id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ _id, add: true })
-            })
-            .then(res => res.json())
-            .then(response => {
-                localStorage.setItem(`liked_${_id}`, 'true');
-                setLiked(true);
-                window.location.reload();
-            });
+        if (!islogged) {
+            alert('please log in');
+            navigate('/login');
+            return;
         }
+
+        fetch(`http://localhost:3000/stories/like/${_id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ _id, add: !liked })
+        })
+        .then(res => res.json())
+        .then(response => {
+            console.log(response.message);
+            localStorage.setItem(`liked_${_id}_${user}`, (!liked).toString());
+            setLiked(!liked);
+            setinnerscore(response.newScore);
+        })
+        .catch(err => console.error('Error liking story:', err));
     };
 
     return (
@@ -75,8 +48,8 @@ export default function Story({ _id, author, title, url, date, index, score = 0 
             <button
                 onClick={LikeHandler}
                 style={{
-                    backgroundColor:  islogged ?  (liked ? "#ff6600" : "#f0f0f0") : "white" ,
-                    color: "black",
+                    backgroundColor: islogged ? (liked ? "#ff6600" : "#f0f0f0") : "white",
+                    color: liked ? "white" : "black",
                     border: liked ? "1px solid #4caf50" : "1px solid gray",
                     padding: "6px 12px",
                     borderRadius: "5px",
@@ -84,7 +57,7 @@ export default function Story({ _id, author, title, url, date, index, score = 0 
                 }}
                 title={liked ? "You liked this" : "Click to like"}
             >
-                👍 : {score}
+                👍 : {innerscore}
             </button>
         </div>
     );

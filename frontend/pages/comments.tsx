@@ -85,6 +85,8 @@ function Main({ res, id, author }: { res: StoryType | null; id: string; author: 
       }
 
       const data = await response.json();
+      console.log(data);
+      
       setReplies(prev => ({ ...prev, [index]: data.replies }));
     } catch (err) {
       setError(err.message);
@@ -172,7 +174,7 @@ function Main({ res, id, author }: { res: StoryType | null; id: string; author: 
                       <Reply
                         key={i}
                         reply={reply}
-                        replyPath={[i]}
+                        replyPath={[index,i]}
                         onReply={handleNestedReply}
                         author={author}
                       />
