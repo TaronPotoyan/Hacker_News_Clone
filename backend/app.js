@@ -5,6 +5,7 @@ import cors from 'cors'
 import routLogin from './controller/rout_login.js'
 import rout_replay from './controller/rout_replay.js'
 import rout_user from './controller/rout_user.js'
+import rout_jobs   from './controller/rout_job.js'
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -21,7 +22,7 @@ app.use('/stories', router);
 app.use('/login',routLogin);
 app.use('/get_replays/',rout_replay);
 app.use('/users/',rout_user);
-
+app.use('/jobs' ,rout_jobs );
 
 app.listen(PORT,()=> {
     console.log(`App is listen in http://localhost:${PORT}`);

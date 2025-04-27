@@ -1,9 +1,11 @@
 import User from "../model/User.js";
 
 async function GetUser(req, res) {
+
     try {
         const { name, password } = req.body;
         const user = await User.findOne({ password, name });
+        console.log(name,password);
         
         if (user) {
             res.status(200).json({ 
