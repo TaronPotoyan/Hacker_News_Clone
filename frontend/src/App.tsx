@@ -8,6 +8,9 @@ import Create_User from '../pages/CreatUser';
 import Newest from '../pages/new'
 import Jobs from '../pages/jobs'
 import AddJob from '../pages/AddJob'
+import Past from '../pages/past'
+import Show from '../pages/show'
+
 function App() {
   return (
     <Router>
@@ -20,6 +23,8 @@ function App() {
         <Route path='/newest' element={<Newest/>} />
         <Route path='/jobs' element={<Jobs/>} />
         <Route path='/addjob' element={<AddJob/>} />
+        <Route path='/past' element={<Past/>} />
+        <Route path='/show' element={<Show/>} />
       </Routes>
     </Router>
   );

@@ -17,8 +17,7 @@ function Header() {
       <nav>
         <ul style={{ listStyle: "none" }} className="nav">
           <li><Link to="/newest">new</Link></li>
-          <li><Link to="/post">post</Link></li>
-          <li><Link to="/comments">comments</Link></li>
+          <li><Link to="/past">past</Link></li>
           <li><Link to="/ask">ask</Link></li>
           <li><Link to="/show">show</Link></li>
           <li><Link to="/jobs">jobs</Link></li>

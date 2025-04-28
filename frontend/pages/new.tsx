@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "../components/header";
 import Story from "../components/Story";
+import React from "react";
 
 export default function Newest() {
     const [stories, setStories] = useState(null);

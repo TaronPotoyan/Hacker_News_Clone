@@ -4,7 +4,7 @@ export async function get(req, res) {
   console.log('Works');
   
   try {
-    const stories = await Story.find().sort({ date: -1 }).lean();
+    const stories = await Story.find({score :{$gte : 2}}).sort({ date: -1 }).lean();
     console.log(stories);
     
     res.json(stories);
@@ -48,7 +48,10 @@ export async function getById(req, res) {
 export async function post(req, res) {
   try {
     const { author, title, url, comments = [] } = req.body;
-
+    console.log('Story');
+    
+    console.log(author , title);
+    
     if (!title || !url || !author) {
       return res.status(400).json({
         error: 'Validation error',
@@ -128,11 +131,10 @@ async function SetScore(req, res) {
 }
 
 
-
 export default {
   SetScore,
   get,
   getById,
   post,
-  put_comm
+  put_comm,
 };
