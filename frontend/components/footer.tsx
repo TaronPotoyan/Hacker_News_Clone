@@ -6,12 +6,49 @@ interface FooterProps {
   author: string;
 }
 
+
+
 export default function Footer({ creating_txt, author }: FooterProps) {
+
   const { id } = useParams();
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
   const [text, setText] = useState("");
+
+
+
+  function handlerAsk() {
+    
+    const loggedInUser = localStorage.getItem("user");
+    if (!loggedInUser) {
+      alert("Please Log in");
+      navigate("/login");
+      return;
+    }
+    const story = {
+      author: loggedInUser,
+      title: `Ask HN: ${title}`,
+      date: new Date().toISOString(),
+    };
+
+    fetch("http://localhost:3000/ask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(story),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Story created:", data);
+        setTitle("");
+        setUrl("");
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
+
 
   function handlerAddShow() {
     const loggedInUser = localStorage.getItem("user");
@@ -197,8 +234,32 @@ export default function Footer({ creating_txt, author }: FooterProps) {
           </button>
         </div>
       </footer>
-    );
-  }
+    )
+  } else if (creating_txt === 'ask') {
+      return (
+        <>
+            <footer className="footer">
+            <div className="footer-content">
+              <h3 className="footer-title">Add a Show</h3>
+              <div className="input-group">
+                <label>
+                  Question:
+                  <input
+                    className="footer-input"
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                </label>
+              </div>
+              <button className="footer-button" onClick={handlerAsk}>
+                ADD ASK
+              </button>
+            </div>
+          </footer>
+        </>
+        )
+      }
 
   return null;
 }

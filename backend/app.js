@@ -8,6 +8,7 @@ import rout_user from './controller/rout_user.js'
 import rout_jobs   from './controller/rout_job.js'
 import rout_past from './controller/rout_past.js'
 import rout_show from './controller/rout_show.js'
+import rout_ask from './controller/rout_ask.js';
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -27,6 +28,8 @@ app.use('/users/',rout_user);
 app.use('/jobs' ,rout_jobs );
 app.use('/past' , rout_past);
 app.use ('/show' , rout_show);
+app.use('/ask' , rout_ask);
+
 
 app.listen(PORT,()=> {
     console.log(`App is listen in http://localhost:${PORT}`);

@@ -10,6 +10,8 @@ import Jobs from '../pages/jobs'
 import AddJob from '../pages/AddJob'
 import Past from '../pages/past'
 import Show from '../pages/show'
+import Ask from '../pages/ask'
+
 
 function App() {
   return (
@@ -25,6 +27,7 @@ function App() {
         <Route path='/addjob' element={<AddJob/>} />
         <Route path='/past' element={<Past/>} />
         <Route path='/show' element={<Show/>} />
+        <Route path='/ask' element={<Ask/>} />
       </Routes>
     </Router>
   );

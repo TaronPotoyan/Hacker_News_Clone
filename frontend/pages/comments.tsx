@@ -24,7 +24,7 @@ interface StoryType {
 
 
 function Comments() {
-  
+
   const { id } = useParams<{ id: string }>();
   const [data, setData] = useState<StoryType | null>(null);
   const [author, setAuthor] = useState<string>("");

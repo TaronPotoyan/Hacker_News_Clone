@@ -19,6 +19,9 @@ export default function Create_User() {
         .then(res => res.json())
         .then(data => {
             console.log("User created:", data);
+            if (data.error) {
+                alert (`${data.error}`)
+            }
             navigate('/');
         })
         .catch(error => {

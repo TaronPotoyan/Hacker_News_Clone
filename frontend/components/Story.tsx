@@ -38,7 +38,7 @@ export default function Story({ _id, author, title, url, date, index, score = 0 
     return (
         <div className="Story">
             <h3>
-                <a href={url}>
+                <a href={'#'}>
                     {index + 1}: {title}
                 </a>
             </h3>

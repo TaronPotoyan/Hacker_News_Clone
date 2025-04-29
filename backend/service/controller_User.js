@@ -24,9 +24,10 @@ async function CreatUser(req, res) {
         const { name, password, date = new Date() } = req.body;
         
        
-        const existingUser = await User.findOne({ name, password });
+        const existingUser = await User.findOne({ name });
+        const existPassword = await User.findOne({password});
         
-        if (existingUser) {
+        if (existingUser || existPassword) {
             return res.status(400).json({ error: "User  already exists" });
         }
 
