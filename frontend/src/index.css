@@ -1,4 +1,4 @@
-@import './App.css';
+@import '../stylesheet/header.css';
 @import '../stylesheet/comments.css';
 @import '../stylesheet//login.css';
 @import '../stylesheet/main_content.css';
